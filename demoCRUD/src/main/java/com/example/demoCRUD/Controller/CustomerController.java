@@ -1,5 +1,6 @@
 package com.example.demoCRUD.Controller;
 
+import com.example.demoCRUD.Exception.CustomerNotFoundException;
 import com.example.demoCRUD.Model.Customer;
 import com.example.demoCRUD.Repository.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,21 @@ public class CustomerController {
     @GetMapping("/customers")
     List<Customer> getAllCustomer(){
         return customerRepo.findAll();
+    }
+    @GetMapping("/customer/{id}")
+    Customer getCustomerById(@PathVariable Long id){
+        return customerRepo.findById(id)
+                .orElseThrow(() ->new CustomerNotFoundException(id));
+    }
+    @PutMapping("/customer/{id}")
+    Customer updateCustomer(@RequestBody Customer newCustomer, @PathVariable Long id){
+        return customerRepo.findById(id)
+                .map(customer -> {
+                    customer.setName(newCustomer.getName());
+                    customer.setEmail(newCustomer.getEmail());
+                    customer.setAddress(newCustomer.getAddress());
+                    return customerRepo.save(customer);
+                }).orElseThrow(()->new CustomerNotFoundException(id));
     }
 
 }
