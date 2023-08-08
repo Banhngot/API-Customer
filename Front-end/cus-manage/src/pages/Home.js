@@ -12,12 +12,12 @@ function Home() {
   }, []);
 
   const loadCustomers = async () => {
-    const result = await axios.get("http://localhost:8080/customers");
+    const result = await axios.get("http://localhost:8080/api/customers");
     setCustomers(result.data);
   };
 
   const deleteCustomer = async (id) => {
-    await axios.delete(`http://localhost:8080/customer/${id}`);
+    await axios.delete(`http://localhost:8080/api/customer/${id}`);
     loadCustomers();
   };
 

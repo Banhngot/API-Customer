@@ -16,7 +16,7 @@ function ViewCustomer() {
   }, []);
 
   const loadCustomer = async () => {
-    const result = await axios.get(`http://localhost:8080/customer/${id}`);
+    const result = await axios.get(`http://localhost:8080/api/customer/${id}`);
     setCustomer(result.data);
   };
 
